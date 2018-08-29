@@ -18,6 +18,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import rocks.informatik.fileex.R;
+import rocks.informatik.fileex.data.FavoritePlace;
 import timber.log.Timber;
 
 public final class FileHelpers {
@@ -40,14 +42,22 @@ public final class FileHelpers {
         // extensions may have different lengths -> use everything after last dot
         // TODO: edge case: how to handle files with dots in their name that may not have an extension?
         String fileName = file.getName();
-        int indexLastDot = TextUtils.lastIndexOf(fileName, '.');
-        // files beginning with a dot are hidden (rest does not count as extension!)
+        int startIndex = 0;
+        // files beginning with a dot are hidden (rest does not count as extension if it contains no other dot!)
+        if (fileName.startsWith(".")) {
+            Timber.d("checking extension of hidden file: " + fileName);
+            startIndex = 1;
+        }
+        int indexLastDot = TextUtils.lastIndexOf(fileName, '.', startIndex, fileName.length());
         if (indexLastDot > 0) {
             int length = fileName.length();
             String extension = fileName.substring(indexLastDot + 1);
             return extension.toLowerCase();
         }
-        // if no dot in filename
+        else {
+            Timber.d("no dot found in filename, returning null");
+        }
+        // if no dot in filename OR starting with dot and containing no other dot
         return null;
     }
 
@@ -107,7 +117,14 @@ public final class FileHelpers {
 
 
     public static void startFileInAssociatedApp(Context context, File clickedFile) {
+
         String extension = FileHelpers.getExtensionString(clickedFile);
+
+        if (extension == null) {
+            // hidden files like ".nomedia" starting with dot have no extension if they contain no additional dot!
+            Toast.makeText(context, context.getString(R.string.text_no_idea_how_to_open_file), Toast.LENGTH_LONG).show();
+            return;
+        }
 
 //        // file handling with content URIs enforced by >Nougat devices
         String authority = context.getApplicationContext().getPackageName() + ".provider";
@@ -130,8 +147,7 @@ public final class FileHelpers {
         try {
             context.startActivity(intentViewFile);
         } catch (ActivityNotFoundException e) {
-            Toast.makeText(context, "No idea how to handle that file... yet... sorry!",
-                    Toast.LENGTH_LONG).show();
+            Toast.makeText(context, context.getString(R.string.text_no_idea_how_to_open_file), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -185,5 +201,126 @@ public final class FileHelpers {
     public static long calculatePercentageUsed(long freeSpace, long totalSpace) {
         int percentageUsed= 100 - (int) (0.5d + ((double) freeSpace / (double) totalSpace) * 100);
         return percentageUsed;
+    }
+
+
+
+    public static List<FavoritePlace> getLocalPhoneFolders(final Context context) {
+
+        // TODO: choose names/icons depending on which folders were found
+
+
+        AsyncTask<Void, Void, List<FavoritePlace>> task = new AsyncTask<Void, Void, List<FavoritePlace>>() {
+            @Override
+            protected List<FavoritePlace> doInBackground(Void... voids) {
+
+                List<FavoritePlace> places = new ArrayList<>();
+
+                // root-folder gets no navigation sidebar entry if not readable for user
+                String rootPath = "/";
+                File folderRoot = new File(rootPath);
+                if (folderRoot.canRead()) {
+                    String rootName = context.getString(R.string.fav_name_root);
+                    FavoritePlace placeRoot = new FavoritePlace(-1, rootName, rootPath, R.drawable.ic_folders_black_24dp);
+                    long rootFreeSpace = getFreeSpaceForPath(rootPath);
+                    placeRoot.setFreeSpace(rootFreeSpace);
+                    long rootTotalSize = getTotalSizeForPath(rootPath);
+                    placeRoot.setTotalSize(rootTotalSize);
+                    places.add(placeRoot);
+                } else {
+                    Timber.d("root folder not readable, navigation entry skipped");
+                }
+
+
+                // does always exist
+                String pathExternal = Environment.getExternalStorageDirectory().getAbsolutePath();
+                Timber.d("path external: " + pathExternal);
+                String externalName = context.getString(R.string.fav_name_external_storage);
+                FavoritePlace placeExternal = new FavoritePlace(-1, externalName, pathExternal,
+                        R.drawable.ic_phone_android_black_24dp);
+                long externalFreeSpace = getFreeSpaceForPath(pathExternal);
+                placeExternal.setFreeSpace(externalFreeSpace);
+                long externalTotalSize = getTotalSizeForPath(pathExternal);
+                placeExternal.setTotalSize(externalTotalSize);
+                places.add(placeExternal);
+
+
+                /* more paths that may be worth checking in the long term?
+                 * /mnt/sdcard
+                 * /extSdCard
+                 */
+
+
+                // TODO: check if there is more than one (if yes: add their respective name to the item)
+                File folderStorage = new File("/storage/");
+                File[] subfoldersInStorage = folderStorage.listFiles();
+                if (subfoldersInStorage != null && subfoldersInStorage.length > 0) {
+                    int subfolderCount = subfoldersInStorage.length;
+                    for (File subfolder : subfoldersInStorage) {
+
+                        Timber.d("checking storage subfolder: " + subfolder.getAbsolutePath());
+
+
+                        // try to read contents -> if not possible: skip current folder
+                        // TODO: come up with better solution -> could be new empty SD card that has no files yet!
+                        // problem: there are multiple folders, that are maybe empty, ut are no sd card...
+                        File[] contents = subfolder.listFiles();
+                        if (contents == null) {
+                            Timber.d("-> contents: NULL");
+                            continue;
+                        }
+                        Timber.d("-> contents: " + Arrays.asList(contents));
+
+                        String currentPath = subfolder.getAbsolutePath();
+                        String nameSdCard = context.getString((R.string.fav_name_sd_card));
+                        String currentFolderName = subfolder.getName();
+                        // TODO: length is >1 in most cases, folders are just not all that interesting...
+                        // count folders that CAN be handled
+                        // or store in DB and offer possibility to edit names
+                        if (subfolderCount > 1) {
+                            nameSdCard = String.format("%s (%s)", nameSdCard, currentFolderName);
+                        }
+
+                        FavoritePlace place = new FavoritePlace(-1, nameSdCard, currentPath, R.drawable.ic_sd_card_black_24dp);
+                        long currentPlaceFreeSpace = getFreeSpaceForPath(currentPath);
+                        place.setFreeSpace(currentPlaceFreeSpace);
+                        long currentPlaceTotalSize = getTotalSizeForPath(currentPath);
+                        place.setTotalSize(currentPlaceTotalSize);
+
+                        places.add(place);
+                    }
+                }
+
+                return places;
+            }
+        }.execute();
+
+
+        try {
+            List<FavoritePlace> places = task.get();
+            Timber.d("found phone places:");
+            if (places != null) {
+                for (FavoritePlace place : places) {
+                    if (place == null) {
+                        continue;
+                    }
+                    Timber.d("path: " + place.getPathStr());
+                }
+            }
+
+            return places;
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+
+//
+
+
+        return new ArrayList<>();
+
     }
 }

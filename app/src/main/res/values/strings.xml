@@ -74,6 +74,9 @@
     <string name="swipe_to_delete_click_to_edit">Swipe to delete, click to edit.</string>
     <string name="content_desc_fab_new_local_fav">Specify and add a new favorite place</string>
     <string name="user_info_on_permission_denied">This is a file manager, it needs the permission to read files, please grant permissions on next app start or rethink what you expect of a file manager</string>
+    <string name="text_no_idea_how_to_open_file">No idea how to handle that file... yet... sorry!</string>
+    <string name="info_app_restart_after_permission_grant">App will be restarted after granting permissions.</string>
+    <string name="info_after_permission_dismissal">Please FINALLY grant permissions! App will be restarted afterwards.</string>
 
 
 </resources>

@@ -1,13 +1,16 @@
 package rocks.informatik.fileex.ui;
 
 import android.Manifest;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -26,7 +29,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -40,6 +42,7 @@ import rocks.informatik.fileex.R;
 import rocks.informatik.fileex.adapters.FavPlacesLocalAdapter;
 import rocks.informatik.fileex.data.FavoritePlace;
 import rocks.informatik.fileex.db.FavoritesManager;
+import rocks.informatik.fileex.tools.FileHelpers;
 import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity implements
@@ -65,9 +68,9 @@ public class MainActivity extends AppCompatActivity implements
 
     private FirebaseAnalytics mFirebaseAnalytics;
 
-    // loader only used for data from SQLite (local favorites), phone storage created on demand (not from database)
+    // loader only used for data from SQLite (local favorites), phone storage created on demand in AsyncTask (not from database)
     public static final int LOADER_ID_LOCAL_FAVORITES = 0;
-    private static final int PERMISSION_REQUEST_CODE = 1337;
+    private static final int PERMISSION_REQUEST_CODE_READ_WRITE_STORAGE = 666;
 
 
     private String pathToOpen;
@@ -93,6 +96,9 @@ public class MainActivity extends AppCompatActivity implements
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        // remaining work can be continued while permission popup is visible
+        handlePermissions();
+
 
         ImageButton btnEditLocalPlaces = findViewById(R.id.btn_local_add);
         btnEditLocalPlaces.setOnClickListener(new View.OnClickListener() {
@@ -104,6 +110,10 @@ public class MainActivity extends AppCompatActivity implements
         });
 
 
+        // always using same instance of Firebase
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(getApplicationContext());
+        MobileAds.initialize(this, getString(R.string.banner_ad_app_id));
+
         // local favorites (stored in database, fetched via loader from ContentProvider)
         // no permissions necessary
         LinearLayoutManager layoutManagerLocalFavs = new LinearLayoutManager(this);
@@ -114,7 +124,6 @@ public class MainActivity extends AppCompatActivity implements
         getSupportLoaderManager().initLoader(LOADER_ID_LOCAL_FAVORITES, null, loaderListenerLocalFavorites);
 
 
-
         Intent intent = getIntent();
         if (intent != null) {
             pathToOpen = intent.getStringExtra(AppWidget.INTENT_EXTRA_PATH_TO_OPEN);
@@ -122,15 +131,24 @@ public class MainActivity extends AppCompatActivity implements
         }
 
 
-        // check permission to read storage
-//        int PERMISSION_REQUEST_CODE = 1;
+    }
+
+
+    public void handlePermissions() {
+
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
             Timber.d("version code > M, must handle permissions on runtime");
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
-                    != PackageManager.PERMISSION_GRANTED) {
+            if ((ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+                    || (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)) {
                 Timber.d("permission denied to read storage, will ask user");
+
+                Snackbar.make(this.findViewById(android.R.id.content),
+                        getString(R.string.info_app_restart_after_permission_grant),
+                        Snackbar.LENGTH_INDEFINITE)
+                        .show();
+
                 String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
-                ActivityCompat.requestPermissions(this, permissions, PERMISSION_REQUEST_CODE);
+                ActivityCompat.requestPermissions(this, permissions, PERMISSION_REQUEST_CODE_READ_WRITE_STORAGE);
             } else {
                 Timber.d("permission to read storage OK");
                 initOnAllPermissionsGranted(pathToOpen);
@@ -141,58 +159,81 @@ public class MainActivity extends AppCompatActivity implements
             Timber.d("permission to read storage OK");
             initOnAllPermissionsGranted(pathToOpen);
         }
-
-
-        // always using same instance of firebase
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(getApplicationContext());
-        MobileAds.initialize(this, getString(R.string.banner_ad_app_id));
-
-
     }
-
-
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_REQUEST_CODE_READ_WRITE_STORAGE:
+                if (grantResults != null && grantResults.length > 0) {
 
-        Timber.d("onRequestPermissionsResult() called");
+                    boolean allPermissionsGranted = true;   // assume all were granted
+                    for (int result : grantResults) {
+                        if (result != PackageManager.PERMISSION_GRANTED) {
+                            allPermissionsGranted = false;  // one failure: ask again for permission
+                        }
+                    }
 
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+                    if (allPermissionsGranted) {
+                        Timber.d("onRequestPermissionsResult(): permissions indeed granted");
 
-        if (requestCode == PERMISSION_REQUEST_CODE) {
-            if (grantResults.length > 0
-                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // permission was granted, yay!
-                Timber.d("onRequestPermissionsResult(): permissions indeed granted");
-                initOnAllPermissionsGranted(pathToOpen);
-            } else {
-                Toast.makeText(this,
-                        getString(R.string.user_info_on_permission_denied),
-                        Toast.LENGTH_LONG).show();
-            }
-            return;
-        }
-        else {
-            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+                        // TODO: solve weird permission problem, reason unclear
+                        // directly using granted permissions during first app runtime does not work for some unknown reason, see notes below
+//                        initOnAllPermissionsGranted(pathToOpen);
+
+                        /*
+                        Today's Dirty Hack: restart app! solves weird problem, that files/folders can not be read
+                        immediately after permissions were granted, only app restart makes them readable.
+
+                        long version:
+                        - during first app start: permissions are requested via popup, but even after the user granted permissions: during
+                        first app runtime all methods on file objects do not work correctly: canRead() returns false, listFiles() returns null, ...
+                        - The system nonetheless claims that permissions have been granted
+                        - restarting the app "solves" the problem: from second app start on everything is fine until the end of time :-)
+                        - recreating the app transparently for the user makes this problem more or less "invisible" until reason is found
+                        and eliminated
+                         */
+
+                        Timber.d("restarting app");
+                        // recreate()-method does not always work as necessary (seems to depend on circumstances/device?)
+                        // instead: using pending intent with timer to restart MainActivity and then exit app
+                        // as found here: https://stackoverflow.com/a/17166729
+                        Intent intentRestart = new Intent(this, MainActivity.class);
+                        int pendingIntentId = 1337;
+                        PendingIntent pendingIntent = PendingIntent.getActivity(this,
+                                pendingIntentId, intentRestart, PendingIntent.FLAG_CANCEL_CURRENT);
+                        AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+                        alarmManager.set(AlarmManager.RTC, System.currentTimeMillis() + 100, pendingIntent);
+                        System.exit(0);
+                    } else {
+                        // permissions were not granted, i.e. user clicked no... advice him to change his mind
+                        Snackbar.make(this.findViewById(android.R.id.content),
+                                getString(R.string.info_after_permission_dismissal),
+                                Snackbar.LENGTH_INDEFINITE)
+                                .setAction(getString(R.string.ok),
+                                        new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                handlePermissions();
+                                            }
+                                        }).show();
+                    }
+                }
+                break;
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
 
 
     public void initOnAllPermissionsGranted(String pathToOpen) {
-
         Timber.d("initOnAllPermissionsGranted() called");
 
         // phone storage places need permissions too (checking if folder contents exist)
         // local phone storage places (on demand, not from database)
         initPhonePlaces();
-
         initFileManagerFragment(pathToOpen);
-
     }
-
-
-
 
 
     @Override
@@ -202,17 +243,14 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     private void initPhonePlaces() {
-
-        Timber.d("initPhonePlaces() called");
         // TODO: longterm: each fragment needs own NavPanel (tablets, landscape)
-
 
         // phone storage (not user customizable, not from database, created on demand)
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         rvLocalPhoneStorages.setLayoutManager(layoutManager);
         adapterLocalPhoneStorages = new FavPlacesLocalAdapter(this, FavPlacesLocalAdapter.TAG_PHONE_STORAGES);
         rvLocalPhoneStorages.setAdapter(adapterLocalPhoneStorages);
-        List<FavoritePlace> placesPhoneStorages = FavoritesManager.getLocalPhoneFolders(this);
+        List<FavoritePlace> placesPhoneStorages = FileHelpers.getLocalPhoneFolders(this);
         if (placesPhoneStorages != null) {
             adapterLocalPhoneStorages.swapFavorites(placesPhoneStorages);
         }
