@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
+    android:paddingStart="0dp"
+    android:paddingEnd="8dp"
+
+    >
+
+    <ImageView
+        android:id="@+id/iv_rv_item_favority_entry_icon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="0dp"
+        app:srcCompat="@drawable/ic_folders_black_24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="parent"
+        android:contentDescription="@string/content_desc_nav_icon_local_phone_storage"
+        />
+
+    <TextView
+        android:id="@+id/tv_rv_item_favority_entry_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        tools:text="Folder name"
+        android:textStyle="bold"
+        android:textAlignment="viewStart"
+        android:layout_marginStart="8dp"
+        app:layout_constraintStart_toEndOf="@id/iv_rv_item_favority_entry_icon"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <ProgressBar
+        android:id="@+id/fav_free_space_progress_bar"
+        android:layout_width="0dp"
+        android:layout_height="16dp"
+        style="?android:attr/progressBarStyleHorizontal"
+        app:layout_constraintStart_toStartOf="@id/tv_rv_item_favority_entry_name"
+        app:layout_constraintTop_toBottomOf="@id/tv_rv_item_favority_entry_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:max="100"
+        android:contentDescription="@string/content_desc_nav_progress_phone_storage_percent"
+        android:progressTint="@color/colorAccent"
+        />
+
+
+    <TextView
+        android:id="@+id/tv_fav_free_space"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAlignment="viewStart"
+        app:layout_constraintStart_toStartOf="@id/tv_rv_item_favority_entry_name"
+        app:layout_constraintTop_toBottomOf="@id/fav_free_space_progress_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="1 GB free of 1000 YB"
+        android:textSize="12sp"
+        />
+
+
+
+
+</android.support.constraint.ConstraintLayout>

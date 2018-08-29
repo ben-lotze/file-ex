@@ -1,0 +1,68 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#09C"
+    android:padding="@dimen/widget_margin">
+
+    <!--<TextView-->
+        <!--android:id="@+id/appwidget_text"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:layout_margin="8dp"-->
+        <!--android:background="#09C"-->
+        <!--android:contentDescription="@string/appwidget_text"-->
+        <!--android:text="@string/appwidget_text"-->
+        <!--android:textColor="#ffffff"-->
+        <!--android:textSize="24sp"-->
+        <!--android:textStyle="bold|italic" />-->
+
+
+    <ImageButton
+        android:id="@+id/icon_widget_internal_phone_storage"
+        android:src="@drawable/ic_phone_android_black_24dp"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.25"
+        android:background="@android:color/transparent"
+        android:adjustViewBounds="true"
+        android:scaleType="centerInside"
+        android:contentDescription="@string/content_desc_widget_btn_internal_storage"
+        />
+    <ImageView
+        android:id="@+id/icon_widget_sd_card"
+        android:src="@drawable/ic_sd_card_black_24dp"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.25"
+        android:background="@android:color/transparent"
+        android:adjustViewBounds="true"
+        android:scaleType="centerInside"
+        android:contentDescription="@string/content_desc_widget_btn_sd_storage"
+        />
+    <ImageView
+        android:id="@+id/icon_widget_downloads"
+        android:src="@drawable/ic_downloads_black_24dp"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.25"
+        android:background="@android:color/transparent"
+        android:adjustViewBounds="true"
+        android:scaleType="centerInside"
+        android:contentDescription="@string/content_desc_widget_btn_downloads"
+        />
+    <ImageView
+        android:id="@+id/icon_widget_camera_images"
+        android:src="@drawable/ic_camera_roll_black_24dp"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.25"
+        android:background="@android:color/transparent"
+        android:adjustViewBounds="true"
+        android:scaleType="centerInside"
+        android:contentDescription="@string/content_desc_widget_btn_dcim"
+        />
+
+</LinearLayout>

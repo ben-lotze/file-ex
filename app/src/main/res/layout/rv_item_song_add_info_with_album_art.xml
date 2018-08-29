@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+    <!--tools:layout_editor_absoluteX="0dp"-->
+    <!--tools:layout_editor_absoluteY="81dp"-->
+
+    <ImageView
+        android:id="@+id/iv_rv_album_art"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:adjustViewBounds="true"
+        android:background="@color/colorPrimary"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/content_desc_rv_folder_browser_folder_file_thumb"
+        />
+
+    <TextView
+        android:id="@+id/tv_track_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        tools:text="#"
+        app:layout_constraintStart_toEndOf="@id/iv_rv_album_art"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/content_descr_rv_item_music_track_number"
+        />
+
+    <TextView
+        android:id="@+id/tv_length"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="0dp"
+        android:gravity="end"
+        tools:text="Length"
+        android:textAlignment="textEnd"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/rating_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_title"
+        android:contentDescription="@string/content_descr_rv_item_music_length"
+        />
+    <!--app:layout_constraintEnd_toStartOf="@+id/btn_rv_item_music_menu_dots"-->
+
+
+    <RatingBar
+        android:id="@+id/rating_bar"
+        style="@android:style/Widget.DeviceDefault.Light.RatingBar.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:numStars="5"
+        android:progressTint="@color/colorPrimary"
+        android:stepSize="0.5"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="@id/tv_length"
+        app:layout_constraintTop_toTopOf="@+id/tv_additional_song_info"
+        android:contentDescription="@string/content_descr_rv_item_music_rating"
+        />
+    <!--app:layout_constraintEnd_toEndOf="@+id/btn_rv_item_music_menu_dots"-->
+
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:maxLines="3"
+        android:minLines="1"
+        tools:text="title"
+        android:textStyle="bold"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/tv_track_number"
+        app:layout_constraintEnd_toStartOf="@+id/rating_bar"
+        app:layout_constraintTop_toTopOf="@+id/tv_track_number"
+        android:contentDescription="@string/content_descr_rv_item_music_title"/>
+
+    <!-- padding bottom necessary in case of several lines of text (otherwise it does nothing)-->
+    <TextView
+        android:id="@+id/tv_additional_song_info"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:paddingBottom="8dp"
+        android:maxLines="2"
+        android:minLines="0"
+        tools:text="additional_song_info with maybe two lines of text (sometimes)"
+        android:textStyle="italic"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/tv_track_number"
+        app:layout_constraintEnd_toStartOf="@+id/rating_bar"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title"
+        android:contentDescription="@string/content_descr_rv_item_music_additional_info"/>
+
+    <!-- may be implemented later, kept for now because this constraint layout has a lot of constraints -->
+    <!--<ImageButton-->
+        <!--android:id="@+id/btn_rv_item_music_menu_dots"-->
+        <!--android:layout_width="16dp"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:layout_marginBottom="0dp"-->
+        <!--android:layout_marginEnd="8dp"-->
+        <!--android:background="@android:color/transparent"-->
+
+        <!--android:scaleType="centerInside"-->
+        <!--app:layout_constraintBottom_toBottomOf="@+id/tv_length"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintTop_toTopOf="@id/tv_length"-->
+
+        <!--app:layout_constraintVertical_bias="0.0"-->
+        <!--app:srcCompat="@drawable/menu_dots" />-->
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        android:background="@color/rv_item_divider"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

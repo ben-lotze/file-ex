@@ -1,0 +1,79 @@
+<resources>
+    <string name="app_name">FileEx</string>
+    <string name="banner_ad_app_id">ca-app-pub-8152358532858014~5447954727</string>
+    <string name="banner_ad_unit_id_banner">ca-app-pub-8152358532858014/9906074485</string>
+
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+
+    <string name="fav_name_root">Root folder</string>
+    <string name="fav_name_external_storage">Internal storage</string>
+    <string name="fav_name_sd_card">SD-Card</string>
+    <string name="fav_name_dcim_camera">Camera (DCIM)</string>
+    <string name="fav_name_downloads">Downloads</string>
+    <!-- different languages may need different order/places of words -->
+    <string name="free_of">%s free of %s</string>
+
+
+    <string name="content_desc_widget_btn_internal_storage">button will start explorer with internal phone path</string>
+    <string name="content_desc_widget_btn_sd_storage">button will start explorer with sd card path</string>
+    <string name="content_desc_widget_btn_dcim">button will start explorer with camera folder</string>
+    <string name="content_desc_widget_btn_downloads">button will start explorer with download folder</string>
+    <string name="content_desc_ad">this is an advertisement that will make me (the programmer of this add) rich and happy if you click on it</string>
+    <string name="content_desc_recycler_files">list showing the file contents of the current folder</string>
+    <string name="content_desc_recycler_local_phone_storage">list of phone storage places</string>
+    <string name="content_desc_recycler_local_favorites">list of favorite folders on the phone</string>
+    <string name="content_desc_btn_app_settings">app settings</string>
+
+
+    <string name="activity_title_fav_places_manager">Manage local favorites</string>
+    <string name="activity_title_edit_favorite">Edit Favorite</string>
+    <string name="activity_title_new_favorite">Create new favorite</string>
+    <string name="activity_title_choose_fav_icon">Choose icon</string>
+    <string name="activity_title_choose_fav_folder">Choose folder</string>
+
+    <string name="hint_no_folder_selected_yet">No folder selected yet</string>
+    <string name="btn_text_select_current_folder">Select current folder</string>
+    <string name="btn_text_select_folder">Select folder</string>
+    <string name="folder">Folder</string>
+    <string name="hint_edit_text_fav_name">Enter name that will be shown in sidebar</string>
+    <string name="name">Name</string>
+
+    <string name="nav_header_phone_storage">Phone storage</string>
+    <string name="nav_header_local_favs">Local folders</string>
+
+
+    <string name="content_desc_selected_icon_for_current_favorite">selected icon for current favorite</string>
+    <string name="content_desc_edit_fav_name">name that will be shown in the navigation sidebar</string>
+    <string name="content_desc_btn_choose_folder">lets you choose a folder</string>
+    <string name="content_desc_rv_icon_chooser">list of icons that can be selected for the current favorite</string>
+    <string name="content_desc_recycler_folder_selector">Navigate into the desirerd folder and than confirm to select this folder</string>
+    <string name="content_desc_nav_btn_local_fav_manager">add or edit your favorite local folders</string>
+    <string name="content_desc_nav_header_background">just a background image without any interaction</string>
+    <string name="content_desc_nav_local_favorite_icon">icon of the local favorite</string>
+    <string name="content_desc_nav_icon_local_phone_storage">icon of the local phone storage place</string>
+    <string name="content_desc_nav_progress_phone_storage_percent">indicator shows how much storage on this device is used in percent</string>
+    <string name="content_desc_rv_folder_browser_folder_file_thumb">icon or thumbnail or this file or folder</string>
+    <string name="contetn_desc_icon_chooser_grid_item">show an icon that can be chosen for the current favorite folder</string>
+    <string name="content_descr_rv_item_music_track_number">track number of the song</string>
+    <string name="content_descr_rv_item_music_length">length of the song in minutes and seconds</string>
+    <string name="content_descr_rv_item_music_rating">rating of the song from 0 to 5 stars</string>
+    <string name="content_descr_rv_item_music_title">title of the song</string>
+    <string name="content_descr_rv_item_music_additional_info">additional info about the song</string>
+    <string name="choose_icon">Choose icon</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+    <string name="swipe_to_delete_click_to_edit">Swipe to delete, click to edit.</string>
+    <string name="content_desc_fab_new_local_fav">Specify and add a new favorite place</string>
+    <string name="user_info_on_permission_denied">This is a file manager, it needs the permission to read files, please grant permissions on next app start or rethink what you expect of a file manager</string>
+
+
+</resources>

@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "1010469868584",
+    "firebase_url": "https://fileex-214016.firebaseio.com",
+    "project_id": "fileex-214016",
+    "storage_bucket": "fileex-214016.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1010469868584:android:f04ae2ceb57b2627",
+        "android_client_info": {
+          "package_name": "rocks.informatik.fileex"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1010469868584-5tf70nmssl3vhegno4ekan6pstb5gn44.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "rocks.informatik.fileex",
+            "certificate_hash": "5d0218df64881a3e7dcc9abdf704e1b475c0b9ed"
+          }
+        },
+        {
+          "client_id": "1010469868584-c9cr1chkn37h8o8jqg9o2d6bqfhfvdu4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAB6qFSJw2iLTxqK9dfVLLoOrSZ-qU8DhY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1010469868584-c9cr1chkn37h8o8jqg9o2d6bqfhfvdu4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      },
+      "admob_app_id": "ca-app-pub-8152358532858014~5447954727"
+    }
+  ],
+  "configuration_version": "1"
+}

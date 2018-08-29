@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.gms.ads.AdView android:id="@+id/ad_view_file_browser_bottom"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:layout_centerHorizontal="true"
+    android:clickable="true"
+    android:focusable="true"
+    ads:adSize="BANNER"
+    ads:adUnitId="@string/banner_ad_unit_id_banner"
+    android:contentDescription="@string/content_desc_ad"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto" />

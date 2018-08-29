@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginEnd="?android:actionBarSize"
+    android:background="#eee"
+    android:clickable="true"
+    android:fitsSystemWindows="false"
+    android:focusable="true"
+    android:theme="@style/AppTheme">
+    <!-- needs to be clickable, otherwise clicks are passed through to the underlying fragment -->
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/drawer_header"
+            layout="@layout/nav_header_main"
+            android:layout_width="wrap_content"
+            android:layout_height="120dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <!-- ..................... PHONE STORAGE ..................... -->
+
+        <TextView
+            android:id="@+id/tv_header_phone_storage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/nav_header_phone_storage"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/drawer_header" />
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_nav_places_local_phone_storage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="0dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:contentDescription="@string/content_desc_recycler_local_phone_storage"
+            android:nestedScrollingEnabled="false"
+            android:overScrollMode="never"
+            android:padding="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tv_header_phone_storage"
+            app:layout_constraintTop_toBottomOf="@id/tv_header_phone_storage" />
+
+
+        <!-- ..................... LOCAL FAVORITES ..................... -->
+
+        <ImageButton
+            android:id="@+id/btn_local_add"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="16dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/content_desc_nav_btn_local_fav_manager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rv_nav_places_local_phone_storage"
+            app:srcCompat="@drawable/ic_edit_black_24dp" />
+
+        <TextView
+            android:id="@+id/tv_header_local_favorites"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/nav_header_local_favs"
+            android:textAlignment="viewStart"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@id/btn_local_add"
+            app:layout_constraintEnd_toStartOf="@id/btn_local_add"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_local_add" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_nav_places_local_favorites"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="0dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:contentDescription="@string/content_desc_recycler_local_favorites"
+            android:nestedScrollingEnabled="false"
+            android:overScrollMode="never"
+            android:padding="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tv_header_local_favorites"
+            app:layout_constraintTop_toBottomOf="@id/tv_header_local_favorites" />
+
+    </android.support.constraint.ConstraintLayout>
+
+
+</ScrollView>
