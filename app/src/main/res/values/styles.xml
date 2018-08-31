@@ -2,7 +2,6 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light">
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -19,9 +18,8 @@
 
 
     <style name="AppTheme.Toolbar.Title" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
-        <!-- Set proper title size -->
-        <item name="android:textSize">@dimen/abc_text_size_title_material_toolbar</item>
-        <item name="android:gravity">center</item>
+        <!--<item name="android:textSize">16sp</item>-->
+        <item name="android:gravity">start</item>
         <item name="android:textColor">#fff</item>
     </style>
 

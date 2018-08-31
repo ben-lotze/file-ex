@@ -193,8 +193,7 @@ public class MainActivity extends AppCompatActivity implements
                         - recreating the app transparently for the user makes this problem more or less "invisible" until reason is found
                         and eliminated
                          */
-
-                        Timber.d("restarting app");
+                        Timber.d("no read access after granting permissions, restarting app");
                         // recreate()-method does not always work as necessary (seems to depend on circumstances/device?)
                         // instead: using pending intent with timer to restart MainActivity and then exit app
                         // as found here: https://stackoverflow.com/a/17166729
@@ -205,6 +204,8 @@ public class MainActivity extends AppCompatActivity implements
                         AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
                         alarmManager.set(AlarmManager.RTC, System.currentTimeMillis() + 100, pendingIntent);
                         System.exit(0);
+
+
                     } else {
                         // permissions were not granted, i.e. user clicked no... advice him to change his mind
                         Snackbar.make(this.findViewById(android.R.id.content),

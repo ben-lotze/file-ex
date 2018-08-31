@@ -30,10 +30,8 @@
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:elevation="8dp"
                 />
 
-            <!--app:srcCompat="@drawable/ic_folders_black_24dp"-->
             <ImageView
                 android:id="@+id/btn_edit_fav_place_local_choose_icon"
                 android:layout_width="96dp"
@@ -46,8 +44,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_choose_icon"
                 android:contentDescription="@string/content_desc_selected_icon_for_current_favorite"
-
-                android:transitionName="robot"
+                android:transitionName="recycler_item_icon_transition"
                 />
 
 

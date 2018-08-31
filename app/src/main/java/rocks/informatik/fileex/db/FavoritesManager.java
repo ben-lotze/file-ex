@@ -1,25 +1,17 @@
 package rocks.informatik.fileex.db;
 
-import android.Manifest;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Environment;
-import android.support.v4.content.ContextCompat;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-import rocks.informatik.fileex.R;
 import rocks.informatik.fileex.data.FavoritePlace;
 import rocks.informatik.fileex.data.FavoritePlaceLocal;
-import rocks.informatik.fileex.tools.FileHelpers;
 import timber.log.Timber;
 
 public class FavoritesManager {

@@ -8,7 +8,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +37,7 @@ import butterknife.ButterKnife;
 import rocks.informatik.fileex.R;
 import rocks.informatik.fileex.tools.FileHelpers;
 import rocks.informatik.fileex.tools.MusicTagHelpers;
+import timber.log.Timber;
 
 public class FileBrowserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -63,7 +63,7 @@ public class FileBrowserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
 
     public FileBrowserAdapter(AdapterCallback callback) {
-        Log.d("FileBrowserAdapter", "SAVE_STATE: new FileBrowserAdapter (default)");
+        Timber.d("SAVE_STATE: new FileBrowserAdapter (default)");
         this.activeFolderStr = Environment.getExternalStorageDirectory().getAbsolutePath();
         this.browsingHistory = new Stack<>();
         this.callback = callback;
@@ -77,7 +77,7 @@ public class FileBrowserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         swapActiveFolder(activeFolderStr, false);
     }
     public FileBrowserAdapter(String activeFolderStr, List<String> browsingHistoryParam, AdapterCallback callback) {
-        Log.d("FileBrowserAdapter", "SAVE_STATE: new FileBrowserAdapter (with params)");
+        Timber.d("SAVE_STATE: new FileBrowserAdapter (with params)");
         this.activeFolderStr = activeFolderStr;
         this.browsingHistory = new Stack<>();
         this.callback = callback;
@@ -170,9 +170,9 @@ public class FileBrowserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
 
     public boolean onBackPressedDirectoryUpWasSuccessful() {
-        Log.d("Browser", "onBackPressedDirectoryUpWasSuccessful() called");
+        Timber.d("onBackPressedDirectoryUpWasSuccessful() called");
         if (!historyHasPreviouslyVisitedFolder()) {
-            Log.d("Browser", "folder history is empty");
+            Timber.d("folder history is empty");
             return false;
         }
         String lastFolder = popLastVisitedFolderFromHistory();

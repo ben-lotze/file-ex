@@ -65,7 +65,7 @@
         android:contentDescription="@string/content_desc_fab_new_local_fav"
         android:focusable="true"
         android:onClick="onFabNewLocalFavoriteClicked"
-        android:src="@drawable/ic_add_black_24dp"
+        app:srcCompat="@drawable/ic_add_black_24dp"
         app:layout_constraintBottom_toTopOf="@id/ad_view_places_manager_local_bottom"
         app:layout_constraintEnd_toEndOf="parent" />
     <!--app:layout_constraintBottom_toTopOf="@id/included_ad"-->

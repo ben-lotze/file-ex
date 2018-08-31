@@ -128,7 +128,6 @@ public final class FileHelpers {
 
 //        // file handling with content URIs enforced by >Nougat devices
         String authority = context.getApplicationContext().getPackageName() + ".provider";
-        Timber.d("FileProvider authority: " + authority);
         Uri fileUri = FileProvider.getUriForFile(context, authority, clickedFile);
 
         MimeTypeMap mimeMap = MimeTypeMap.getSingleton();
@@ -138,9 +137,6 @@ public final class FileHelpers {
 //        Timber.d("MIME type: " + mimeType);
 
         intentViewFile.setDataAndType(fileUri, mimeType);
-        if (mimeType.contains("image")) {
-            intentViewFile.setDataAndType(fileUri, "image/*");
-        }
         intentViewFile.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intentViewFile.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         intentViewFile.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
@@ -249,9 +245,8 @@ public final class FileHelpers {
                  * /mnt/sdcard
                  * /extSdCard
                  */
-
-
                 // TODO: check if there is more than one (if yes: add their respective name to the item)
+                Timber.d("checking for sd cards and more storage");
                 File folderStorage = new File("/storage/");
                 File[] subfoldersInStorage = folderStorage.listFiles();
                 if (subfoldersInStorage != null && subfoldersInStorage.length > 0) {

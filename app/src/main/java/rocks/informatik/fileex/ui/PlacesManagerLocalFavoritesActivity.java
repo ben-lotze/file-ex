@@ -120,14 +120,12 @@ public class PlacesManagerLocalFavoritesActivity extends AppCompatActivity
         if (iconViewInRecycler != null
                 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             ActivityOptions options = ActivityOptions
-                    .makeSceneTransitionAnimation(this, iconViewInRecycler, "robot");
+                    .makeSceneTransitionAnimation(this, iconViewInRecycler, "recycler_item_icon_transition");
             startActivity(intent, options.toBundle());
         } else {
-            // no transition if shared view not found
+            // no transition if shared view not found or older device
             startActivity(intent);
         }
-
-
     }
 
     public void onFabNewLocalFavoriteClicked(View view) {

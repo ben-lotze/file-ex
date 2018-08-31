@@ -20,6 +20,7 @@ import butterknife.ButterKnife;
 import rocks.informatik.fileex.R;
 import rocks.informatik.fileex.data.FavoritePlace;
 import rocks.informatik.fileex.tools.FileHelpers;
+import timber.log.Timber;
 
 /**
  * queries all favorite places stored in the database
@@ -107,9 +108,9 @@ public class FavPlacesLocalAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     public void swapFavorites(List<FavoritePlace> places) {
         this.favPlaces = places;
-        Log.d(TAG, "swapPlaces: listing favorites");
+        Timber.d("swapPlaces: listing favorites");
         for (FavoritePlace place : favPlaces) {
-            Log.d(TAG, place.toString());
+            Timber.d(place.toString());
         }
 
         notifyDataSetChanged();
@@ -184,7 +185,7 @@ public class FavPlacesLocalAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         @Override
         public void onClick(View v) {
             int clickedPosition = getAdapterPosition();
-            Log.d("MainActivity", "fav item clicked, notifying listener, index=" + clickedPosition
+            Timber.d("fav item clicked, notifying listener, index=" + clickedPosition
                     + ", path=" + v.getTag(R.id.tv_rv_item_favority_entry_name));
             onClickListener.onListItemClicked(clickedPosition, getAdapterTag());
         }
@@ -225,7 +226,7 @@ public class FavPlacesLocalAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         @Override
         public void onClick(View v) {
             int clickedPosition = getAdapterPosition();
-            Log.d("MainActivity", "fav item clicked, notifying listener, index=" + clickedPosition
+            Timber.d("fav item clicked, notifying listener, index=" + clickedPosition
                     + ", path=" + v.getTag(R.id.tv_rv_item_favority_entry_name));
             onClickListener.onListItemClicked(clickedPosition, getAdapterTag());
         }

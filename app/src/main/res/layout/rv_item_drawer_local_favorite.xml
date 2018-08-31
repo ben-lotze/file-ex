@@ -23,7 +23,7 @@
         android:contentDescription="@string/content_desc_nav_local_favorite_icon"
         app:layout_constraintBottom_toTopOf="parent"
 
-        android:transitionName="robot"
+        android:transitionName="recycler_item_icon_transition"
         />
 
     <TextView

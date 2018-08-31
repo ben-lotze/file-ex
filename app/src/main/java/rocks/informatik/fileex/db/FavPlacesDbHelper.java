@@ -6,9 +6,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
 import android.os.Environment;
-import android.util.Log;
 
 import rocks.informatik.fileex.R;
+import timber.log.Timber;
 
 public class FavPlacesDbHelper extends SQLiteOpenHelper {
 
@@ -52,7 +52,7 @@ public class FavPlacesDbHelper extends SQLiteOpenHelper {
         valuesDcim.put(FavPlacesContract.FavPlaceLocalEntry.COLUMN_ICON_RES_ID, R.drawable.ic_menu_camera);
         db.insert(FavPlacesContract.FavPlaceLocalEntry.TABLE_NAME, null, valuesDcim);
 
-        Log.d("DbHelper", "tables created, inserted defaults, version="+VERSION);
+        Timber.d("tables created, inserted defaults, version="+VERSION);
     }
 
     @Override
