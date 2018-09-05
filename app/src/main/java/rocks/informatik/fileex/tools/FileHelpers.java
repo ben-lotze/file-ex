@@ -267,6 +267,11 @@ public final class FileHelpers {
                         Timber.d("-> contents: " + Arrays.asList(contents));
 
                         String currentPath = subfolder.getAbsolutePath();
+                        // do not add same folder a second time (some phones mount first built-in external storage as direct subfolder in /storage/sdcard)
+                        if (currentPath != null && currentPath.equalsIgnoreCase(pathExternal)) {
+                            continue;
+                        }
+
                         String nameSdCard = context.getString((R.string.fav_name_sd_card));
                         String currentFolderName = subfolder.getName();
                         // TODO: length is >1 in most cases, folders are just not all that interesting...

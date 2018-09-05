@@ -177,6 +177,9 @@ public class FileBrowserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         }
         String lastFolder = popLastVisitedFolderFromHistory();
         swapActiveFolder(lastFolder, false);
+
+        callback.changeTitle(lastFolder);
+
         return true;
     }
 
