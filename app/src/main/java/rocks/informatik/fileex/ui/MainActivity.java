@@ -387,7 +387,6 @@ public class MainActivity extends AppCompatActivity implements
                         public void deliverResult(List<FavoritePlace> places) {
                             super.deliverResult(places);
                         }
-
                     };
                 }
 

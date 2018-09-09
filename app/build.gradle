@@ -1,13 +1,25 @@
 apply plugin: 'com.android.application'
 
+//def properties = new Properties()
+//file("keystore.properties").withInputStream { properties.load(it) }
+
+//loadProperties()
+//def loadProperties() {
+//    def environment = hasProperty('env') ? env : 'dev'
+//    println "Current Environment: " + environment
+//
+//    def configFile = file('keystore.properties')
+//    def config = new ConfigSlurper(environment).parse(configFile.toURL())
+//    project.ext.config = config
+//}
 
 android {
     signingConfigs {
         config {
-            keyAlias 'key-capstone-fileex'
-            keyPassword 'anotherCleartextPasswordThatIWouldNeverUseAnywhereElse'
-            storeFile file("$rootDir/keystore-capstone-fileex.jks")
-            storePassword 'cleartextPasswordThatIWouldNeverUseAnywhereElse'
+            keyAlias gradle.properties[myKeyAlias]
+            keyPassword gradle.properties[myKeyPassword]
+            storeFile gradle.properties[myStoreFile]
+            storePassword gradle.properties[myStorePassword]
         }
     }
     compileSdkVersion 27
