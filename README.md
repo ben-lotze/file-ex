@@ -9,8 +9,8 @@ Final Capstone Project in Udacity Android Nanodegree
 #### File browser
 <img src="/screenshots/browser_folders.png" width="250" /> <img src="/screenshots/browser_music_files.png" width="250" /> <img src="/screenshots/browser_images.png" width="250" />
 
-#### Favorite manager with swipe to remove functionality
-<img src="/screenshots/fav_manager.png" width="250" /> <img src="/screenshots/fav_manager_swipe_to_remove.gif" width="250" />
+#### Favorite manager with swipe to remove functionality and transition
+<img src="/screenshots/fav_manager.png" width="250" /> <img src="/screenshots/fav_manager_swipe_to_remove.gif" width="250" /> <img src="/screenshots/fav_manager_transition.gif" width="250" />
 
 #### Favorite manager (edit/new)
 <img src="/screenshots/fav_add_edit.png" width="250" /> <img src="/screenshots/fav_add_edit_user_input_check.png" width="250" /> <img src="/screenshots/fav_folder_chooser.png" width="250" />	 <img src="/screenshots/fav_icon_chooser.png" width="250" />
